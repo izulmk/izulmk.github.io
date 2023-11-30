@@ -43,7 +43,7 @@ const Navbar = ({ isNavbarBlack, currentSlide }) => {
         </a>
       </div>
       {/* MOBILE MENU */}
-      <div className=" px-4 pt-4 md:hidden flex items-center justify-center">
+      <div className=" p-0 m-0 md:hidden flex items-center justify-center">
         <Menu currentSlide={currentSlide} />
       </div>
     </div>
