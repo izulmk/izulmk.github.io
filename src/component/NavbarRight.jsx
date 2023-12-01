@@ -1,4 +1,18 @@
 import React from "react";
+import { motion } from "framer-motion";
+
+const variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const NavbarRight = ({ currentSlide, handleCircleClick, navbarRightSlide }) => {
   const circleClasses = `md:w-5 md:h-5 rounded-full mt-10 ${
@@ -19,7 +33,7 @@ const NavbarRight = ({ currentSlide, handleCircleClick, navbarRightSlide }) => {
   console.log(navbarRightSlide);
 
   return (
-    <nav className="bg-transparent p-4 fixed inset-y-0 right-0 flex flex-col items-center justify-center m-4 z-10">
+    <motion.nav className="bg-transparent p-4 fixed inset-y-0 right-0 flex flex-col items-center justify-center m-4 z-10" variants={variants} initial="initial" animate="animate">
       <ul className="flex flex-col space-y-4">
         <li>
           <div className={`transition-opacity duration-500 ${currentSlide === 1 ? `${circleClasses} bg-slate-900 opacity-100` : `${circleClasses} opacity-40`} `} onClick={() => handleClick(1)}></div>
@@ -43,7 +57,7 @@ const NavbarRight = ({ currentSlide, handleCircleClick, navbarRightSlide }) => {
           ></div>
         </li>
       </ul>
-    </nav>
+    </motion.nav>
   );
 };
 

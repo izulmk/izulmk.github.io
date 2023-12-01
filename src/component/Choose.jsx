@@ -1,29 +1,71 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+
+const variants = {
+  initial: {
+    x: -500,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  },
+  animate1: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const Choose = () => {
+  const ref = useRef();
+  const [shouldAnimate1, setShouldAnimate1] = useState(false);
+
+  const isInview = useInView(ref, { threshold: 0.5 });
+
+  useEffect(() => {
+    if (isInview && !shouldAnimate1) {
+      setTimeout(() => {
+        setShouldAnimate1(true);
+      }, 1000); // Delay time in milliseconds after the main animation completes
+    }
+  }, [isInview, shouldAnimate1]);
+
+  const items = [
+    { h1: "70+", p: "Project solved" },
+    { h1: "8", p: "Project solved" },
+    { h1: "9", p: "Project solved" },
+  ];
+
   return (
-    <div>
-      <div className="snap-start bg-black text-white h-screen w-screen gap-8 flex flex-col justify-center p-10 md:p-[100px] xl:p-[150px]" data-slide="2" id="slide-2">
-        <h1 className="text-3xl md:text-5xl font-bold xl:text-6xl">Why choose us?</h1>
-        <p className="text-xl md:text-2xl xl:text-4xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis asperiores laboriosam harum placeat nesciunt explicabo error neque facilis quas quidem sunt unde animi, fugiat quaerat cumque inventore tempora consectetur sit. Illo
-          ad ducimus necessitatibus.
-        </p>
-        <div className="flex flex-row gap-10">
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl md:text-5xl font-bold xl:text-6xl">70+</h1>
-            <p className="text-xs md:text-sm xl:text-lg">Project solved</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl md:text-5xl font-bold xl:text-6xl">8</h1>
-            <p className="text-xs md:text-sm xl:text-lg">Project solved</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl md:text-5xl font-bold xl:text-6xl">9</h1>
-            <p className="text-xs md:text-sm xl:text-lg">Project solved</p>
-          </div>
-        </div>
-      </div>
+    <div className="bg-black">
+      <motion.div
+        className="snap-start text-white h-screen w-screen gap-8 flex flex-col justify-center p-10 md:p-[100px] xl:p-[150px]"
+        data-slide="2"
+        id="slide-2"
+        variants={variants}
+        initial="initial"
+        ref={ref}
+        animate={isInview ? "animate" : "initial"}
+      >
+        <motion.h1 className="text-3xl md:text-5xl font-bold xl:text-6xl">Why choose us?</motion.h1>
+        <motion.p className="text-xl md:text-2xl xl:text-4xl">Lorem ipsum dolor sit amet consectetur adipisicing elit...</motion.p>
+        <motion.div className="flex flex-row gap-10" variants={variants} initial="initial" animate={shouldAnimate1 ? "animate1" : "initial"}>
+          {items.map((item, i) => (
+            <motion.div className="flex flex-col items-center" variants={variants} key={i}>
+              <motion.h1 className="text-2xl md:text-5xl font-bold xl:text-6xl">{item.h1}</motion.h1>
+              <motion.p className="text-xs md:text-sm xl:text-lg">{item.p}</motion.p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

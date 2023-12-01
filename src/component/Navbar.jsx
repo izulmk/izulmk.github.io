@@ -1,5 +1,19 @@
 import React from "react";
 import Menu from "./Menu";
+import { motion } from "framer-motion";
+
+const variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const Navbar = ({ isNavbarBlack, currentSlide }) => {
   console.log(currentSlide);
@@ -29,7 +43,7 @@ const Navbar = ({ isNavbarBlack, currentSlide }) => {
   };
 
   return (
-    <div className={`h-12 ${isNavbarBlack ? "text-white" : "bg-transparent"} md:p-8 flex items-center justify-between md:h-24 lg:px-20 xl:px-40 z-10 fixed w-full`}>
+    <motion.div className={`h-12 ${isNavbarBlack ? "text-white" : "bg-transparent"} md:p-8 flex items-center justify-between md:h-24 lg:px-20 xl:px-40 z-10 fixed w-full`} variants={variants} initial="initial" animate="animate">
       <div className="hidden md:flex gap-4 flex-1 md:justify-end text-xl">
         <a className="cursor-pointer" onClick={handleHomeClick}>
           Home
@@ -46,7 +60,7 @@ const Navbar = ({ isNavbarBlack, currentSlide }) => {
       <div className=" p-0 m-0 md:hidden flex items-center justify-center">
         <Menu currentSlide={currentSlide} />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
