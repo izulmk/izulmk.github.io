@@ -6,6 +6,7 @@ import Hero from "./component/Hero";
 import Choose from "./component/Choose";
 import Excel from "./component/Excel";
 import Contact from "./component/Contact";
+import SubMenu from "./component/subcomponent/SubMenu";
 
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -76,7 +77,8 @@ const App = () => {
           <Choose isNavbarBlack={isNavbarBlack} />
         </section>
         <section id="Projects">
-          <Excel isNavbarBlack={isNavbarBlack} currentSlide={currentSlide} handleCircleClick={handleCircleClick} navbarRightSlide={navbarRightSlide} />
+          <SubMenu currentSlide={currentSlide} handleCircleClick={handleCircleClick} />
+          <Excel isNavbarBlack={isNavbarBlack} navbarRightSlide={navbarRightSlide} />
         </section>
         <section id="Contact">
           <Contact isNavbarBlack={isNavbarBlack} />

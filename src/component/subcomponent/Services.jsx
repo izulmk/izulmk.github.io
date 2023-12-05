@@ -1,7 +1,29 @@
-import { motion } from "framer-motion";
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
-const Services = ({ items, variants, refs, isInviews }) => {
+const Services = ({ items, variants }) => {
+  const [ref1, ref2, ref3] = [useRef(), useRef(), useRef(), useRef()];
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  const isInview1 = useInView(ref1, { threshold: 0.5 });
+  const isInview2 = useInView(ref2, { threshold: 0.5 });
+  const isInview3 = useInView(ref3, { threshold: 0.5 });
+
+  useEffect(() => {
+    const inViewRefs = [isInview1, isInview2, isInview3];
+
+    inViewRefs.forEach((view) => {
+      if (view && !shouldAnimate) {
+        setTimeout(() => {
+          setShouldAnimate(true);
+        }, 1000);
+      }
+    });
+  }, [isInview1, isInview2, isInview3, shouldAnimate]);
+
+  const refs = [ref1, ref2, ref3];
+  const isInviews = [isInview1, isInview2, isInview3];
+
   return (
     <div>
       {items.map((item, index) => (
